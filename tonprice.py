@@ -33,11 +33,12 @@ def GetTonPrice():
                 if item['id'] == '54683':
                     new_price = Decimal(item["price_usd"])
                     message = f"TON PRICE: {new_price}"
-                    
                     if ton_price < new_price:
                         send_to_telegram(f'🟢 {message}')
-                    else:
+                    elif ton_price > new_price:
                         send_to_telegram(f'🔴 {message}')
+                    else:
+                        continue
                     
                     ton_price = new_price
 
