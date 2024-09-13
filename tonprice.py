@@ -1,15 +1,18 @@
 from os import environ
+from dotenv import load_dotenv
 from decimal import Decimal
-
 import requests
 import time
 
+
+load_dotenv()
 
 URL = 'https://api.coinlore.net/api/tickers/'
 
 
 def send_to_telegram(message):
-    url = f'https://api.telegram.org/bot{environ.get("BOT_TOKEN")}/sendMessage'
+    token = environ.get("BOT_TOKEN")
+    url = f'https://api.telegram.org/bot{token}/sendMessage'
     payload = {
         'chat_id': environ.get('GROUP_CHAT_ID'),
         'text': message,
@@ -38,8 +41,7 @@ def GetTonPrice():
                     elif ton_price > new_price:
                         send_to_telegram(f'🔴 {message}')
                     else:
-                        continue
-                    
+                        continue                    
                     ton_price = new_price
 
         else:
